@@ -1,5 +1,5 @@
 import React from "react";
-import JournalEntries from './JournalEntries'
+import JournalEntries from "./JournalEntries";
 function Sidebar() {
   return (
     <aside className="journal__sidebar">

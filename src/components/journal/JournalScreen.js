@@ -1,20 +1,19 @@
 import React from "react";
 
 import Sidebar from "./Sidebar";
-import NothingSelected from './NothingSelected'
-import NoteContainer from './../notes/NoteContainer'
+import NothingSelected from "./NothingSelected";
+import NoteContainer from "./../notes/NoteContainer";
 function JournalScreen() {
   return (
     <div className="journal__main-content">
       <Sidebar />
 
       <main>
-
-      <NoteContainer />
-       </main>
+        <NoteContainer />
+      </main>
     </div>
   );
 }
-      // <NothingSelected />
+// <NothingSelected />
 
 export default JournalScreen;

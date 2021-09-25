@@ -1,8 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import useForm from "./../../hooks/useForm";
+import validator from "validator";
+import { useDispatch, useSelector } from "react-redux";
 
+import useForm from "./../../hooks/useForm";
+import { setError, removeError } from "./../../actions/ui";
+import { startRegisterWithEmailPassword } from "../../actions/auth";
 function RegisterScreen() {
+  const dispatch = useDispatch();
+  const { msgError } = useSelector((state) => state.ui);
   const [stateValues, handleInputChange] = useForm({
     name: "",
     email: "",
@@ -12,6 +18,28 @@ function RegisterScreen() {
   const { name, email, password, password2 } = stateValues;
   const handleSubmit = (e) => {
     e.prevetDefault();
+    if (isFormValid()) {
+      dispatch(startRegisterWithEmailPassword(name, email, password));
+    }
+  };
+  const isFormValid = () => {
+    if (name.trim().length === 0) {
+      dispatch(setError("Name is required!"));
+      return false;
+    } else if (!validator.isEmail(email)) {
+      dispatch(setError("Email Invalid"));
+      return false;
+    } else if (password !== password2) {
+      dispatch(setError("passowrd no coinciden"));
+
+      return false;
+    } else if (password.length <= 5) {
+      dispatch(setError("El minimo deb ser 5 caracteres"));
+      return false;
+    }
+
+    dispatch(removeError());
+    return true;
   };
   return (
     <div>
@@ -56,6 +84,9 @@ function RegisterScreen() {
         >
           Register
         </button>
+
+        {msgError && <span className="alert alert-error">{msgError}</span>}
+
         <Link to="/auth/login" className="link">
           Already registered?
         </Link>

@@ -1,12 +1,15 @@
 import React from "react";
+import { Provider } from "react-redux";
 
 import AppRourter from "./router/AppRourter";
-import './styles/index.scss'
+import "./styles/index.scss";
 
 export default function JournalApp() {
   return (
     <div>
-      <AppRourter />
+      <Provider>
+        <AppRourter />
+      </Provider>
     </div>
   );
 }

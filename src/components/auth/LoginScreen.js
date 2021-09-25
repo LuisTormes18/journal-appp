@@ -1,16 +1,33 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+
 import useForm from "./../../hooks/useForm";
+import {
+  startLoginByEmailPassword,
+  startLoginByGoogleAccount,
+} from "./../../actions/auth";
 
 function LoginScreen() {
+  const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.ui);
+
   const [stateValues, handleInputChange] = useForm({
     email: "",
     password: "",
   });
   const { email, password } = stateValues;
+
   const handleSubmit = (e) => {
     e.prevetDefault();
+    dispatch(startLoginByEmailPassword(email, password));
   };
+
+  const handleGoogleLogin = (e) => {
+    e.prevetDefault();
+    dispatch(startLoginByGoogleAccount());
+  };
+
   return (
     <div>
       <h2 className="auth__title mb-5">Login</h2>
@@ -35,11 +52,12 @@ function LoginScreen() {
           type="submit"
           onClick={handleSubmit}
           className="btn btn-primary btn-block mt-5"
+          disabled={loading}
         >
           Login
         </button>
 
-        <div className="google-btn">
+        <div className="google-btn" onClick={handleGoogleLogin}>
           <div className="google-icon-wrapper">
             <img
               className="google-icon"

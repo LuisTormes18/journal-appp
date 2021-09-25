@@ -9,9 +9,8 @@
   &:focus {
     outline: none;
   }
-  &:hover{
+  &:hover {
     color: lighten($color: $color-light-grey, $amount: 20);
-
   }
 }
 
