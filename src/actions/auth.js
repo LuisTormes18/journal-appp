@@ -24,7 +24,7 @@ export const startRegisterWithEmailPassword = (name, email, password) => {
   return (dispatch) => {
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(async ({ user }) => {
-        await user.UpdateProfile({ displayName: name });
+        await user.updateProfile({ displayName: name });
         dispatch(login(user.uid, user.displayName));
       })
       .catch((err) => {
@@ -49,7 +49,7 @@ export const login = (uid, displayName) => ({
   type: types.login,
   payload: {
     uid,
-    displayName,
+    name:displayName,
   },
 });
 
