@@ -17,7 +17,8 @@ function RegisterScreen() {
   });
   const { name, email, password, password2 } = stateValues;
   const handleSubmit = (e) => {
-    e.prevetDefault();
+    e.preventDefault();
+    console.log({ name, email, password, password2 } )
     if (isFormValid()) {
       dispatch(startRegisterWithEmailPassword(name, email, password));
     }
@@ -34,7 +35,7 @@ function RegisterScreen() {
 
       return false;
     } else if (password.length <= 5) {
-      dispatch(setError("El minimo deb ser 5 caracteres"));
+      dispatch(setError("El minimo debe ser 5 caracteres"));
       return false;
     }
 
@@ -64,7 +65,7 @@ function RegisterScreen() {
         <input
           type="password"
           placeholder="Password"
-          name="passsword"
+          name="password"
           className="auth__input mb-5"
           values={password}
           onChange={handleInputChange}
@@ -72,7 +73,7 @@ function RegisterScreen() {
         <input
           type="password"
           placeholder="Confirm Password"
-          name="passsword2"
+          name="password2"
           className="auth__input mb-5"
           values={password2}
           onChange={handleInputChange}

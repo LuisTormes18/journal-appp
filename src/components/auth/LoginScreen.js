@@ -19,19 +19,19 @@ function LoginScreen() {
   const { email, password } = stateValues;
 
   const handleSubmit = (e) => {
-    e.prevetDefault();
+    e.preventDefault();
     dispatch(startLoginByEmailPassword(email, password));
   };
 
   const handleGoogleLogin = (e) => {
-    e.prevetDefault();
+    e.preventDefault();
     dispatch(startLoginByGoogleAccount());
   };
 
   return (
     <div>
       <h2 className="auth__title mb-5">Login</h2>
-      <form>
+      <form onSubmit={handleSubmit}>
         <input
           type="email"
           placeholder="Email"
@@ -43,14 +43,13 @@ function LoginScreen() {
         <input
           type="password"
           placeholder="Password"
-          name="passsword"
+          name="password"
           className="auth__input mb-5"
           value={password}
           onChange={handleInputChange}
         />
         <button
           type="submit"
-          onClick={handleSubmit}
           className="btn btn-primary btn-block mt-5"
           disabled={loading}
         >

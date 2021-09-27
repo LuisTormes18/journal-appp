@@ -1,25 +1,43 @@
-import React, { useEffect } from "react";
-import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
-import { firebase } from "../firebase/firebase-config";
-import JournalScreen from "./../components/journal/JournalScreen";
-import AuthRouter from "./AuthRouter";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { BrowserRouter, Switch,  Redirect } from "react-router-dom";
+
+import JournalScreen from "./../components/journal/JournalScreen";
+import LoadingScreen from "./../components/ui/LoadingScreen";
+import { firebase } from "../firebase/firebase-config";
+import AuthRouter from "./AuthRouter";
 import { login } from "../actions/auth";
+import PrivateRoute  from './PrivateRoute';
+import PublicRoute  from './PublicRoute';
+
 function AppRourter(props) {
   const dispatch = useDispatch();
+
+const [checking, setChecking] = useState(true);
+const [isAuthenticate, setIsAuthenticate] = useState(false);
+
   useEffect(() => {
-    firebase.auth.onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged((user) => {
       if (user?.uid) {
         dispatch(login(user.uid, user.displayName));
+        setIsAuthenticate(true);
+      }else{
+        setIsAuthenticate(false);
+
       }
+      setChecking(false);
     });
-  }, [dispatch]);
+  }, [dispatch,setChecking,setIsAuthenticate]);
+
+if(checking){
+  return (<LoadingScreen />) 
+}
 
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/auth" component={AuthRouter} />
-        <Route exact path="/" component={JournalScreen} />
+        <PublicRoute path="/auth" isAuthenticate={isAuthenticate} component={AuthRouter} />
+        <PrivateRoute exact path="/" isAuthenticate={isAuthenticate} component={JournalScreen} />
         <Redirect to="/auth/login" />
       </Switch>
     </BrowserRouter>

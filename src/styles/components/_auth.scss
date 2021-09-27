@@ -13,7 +13,8 @@
   box-shadow: 0px 3px $color-dark-grey;
   border-radius: 2px;
   padding: 40px;
-  width: 250px;
+  width: 300px;
+  height: 350px;
 }
 .auth__title {
   color: darken($color: $color-primary, $amount: 20);
@@ -34,12 +35,12 @@
   }
 }
 
-.auth__alert-error {
+.alert-error {
   background-color: red;
   border-radius: 5px;
   color: white;
-  text-align: center;
-  padding: 20px;
+  text-align: left;
+  padding: 5px;
 }
 
 .google-btn {
