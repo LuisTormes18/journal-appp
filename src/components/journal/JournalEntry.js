@@ -1,24 +1,40 @@
 import React from "react";
+import moment from 'moment';
+import { useDispatch } from 'react-redux';
 
-export default function JournalEntry() {
+export default function JournalEntry({id,summary,date,title,url}) {
+
+	const momentDate = moment(data);
+
+  const dispatch = useDispatch();
+
+  const handleSelectNote =()=>{
+    dispatch(activeNote(id,{summary,date,title,url}));
+  }
+
   return (
-    <div className="journal__entry pointer">
-      <div
+    <div className="journal__entry pointer" onClick={handleSelectNote}>
+      
+      {
+        url && (
+          <div
         className="picture"
         style={{
           backgroundSize: "cover",
           backgroundImage:
-            "url(https://images.pexels.com/photos/3768/sky-sunny-clouds-cloudy.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500)",
+            "url(`${url}`)",
         }}
       ></div>
+)
+      }
 
       <div className="body">
-        <p className="title">titulo</p>
-        <p className="content"> dingdnginigdngdingidgnidngdgn</p>
+        <p className="title">{title}</p>
+        <p className="content">{summary}</p>
       </div>
       <div className="date-box">
-        <span>Monday</span>
-        <h4>28</h4>
+        <span>{ momentDate.format('dddd') }</span>
+        <h4>{ momentDate.format('Do') }</h4>
       </div>
     </div>
   );
